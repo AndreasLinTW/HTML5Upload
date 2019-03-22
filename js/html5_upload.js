@@ -6,22 +6,22 @@
 //
 
 
-var nSlice_count = 100,//分段数
+var nSlice_count = 100,//分段數
 	nMin_size 	 = 0.5,//最小分段大小(M)
 	nMax_size	 = 5,  //最大分段大小(M)
-	sFile_type,		   //文件类型
-	nFile_load_size,   //文件上传部分大小
+	sFile_type,		   //文件類型
+	nFile_load_size,   //文件上傳部分大小
 	nFile_size,		   //文件大小
-	nPreuploaded = 0,  //上一次记录上传部分的大小
-	bIs_uploading= false,//是否上传中
-	bStart_upload= false;//是否开始上传
+	nPreuploaded = 0,  //上一次記錄上傳部分的大小
+	bIs_uploading= false,//是否上傳中
+	bStart_upload= false;//是否開始上傳
 
 
 function startUpload(){
 	var form = document.forms["upload_form"];
 	if(form["file"].files.length<=0)
 	{
-		alert("请先选择文件，然后再点击上传");
+		alert("請先選擇文件，然後再點擊上傳");
 		return;
 	}
 
@@ -44,7 +44,7 @@ function startUpload(){
 				return {
 					fileName : this.get_name(),
 					fileSize : this.get_size(),
-					fileType : this.get_type()	
+					fileType : this.get_type()
 				}
 			}
 		};
@@ -83,13 +83,13 @@ function startUpload(){
 	};
 
 	var floadend = function(e){
-		if(reader.error){alert("上传失败,出现未知错误");clearInterval(timer);return;}
+		if(reader.error){alert("上傳失敗,出現未知錯誤");clearInterval(timer);return;}
 		clearInterval(timer);
 		document.querySelector(".speed").innerHTML = "0k/s";
-		document.querySelector(".left_time").innerHTML = "剩余时间 | 00:00:00";
+		document.querySelector(".left_time").innerHTML = "剩餘時間 | 00:00:00";
 		var $res = e.target.responseText;
 		if($res=="success") bIs_uploading =true;
-		document.querySelector(".isCompleted").innerHTML="上传状态: " + (bIs_uploading?"上传完成":"正在上传..");
+		document.querySelector(".isCompleted").innerHTML="上傳狀態: " + (bIs_uploading?"上傳完成":"正在上傳..");
 	};
 
 	reader.onloadstart = function(){
@@ -99,11 +99,11 @@ function startUpload(){
 			fSize = conversion.bytesTosize(get_all.fileSize);
 
 		document.querySelector(".upload_message_show").style.display = "block";
-		document.querySelector(".upload_file_name").innerHTML ="文件名称: " + fName;
-		document.querySelector(".upload_file_type").innerHTML ="文件类型: " + fType;
+		document.querySelector(".upload_file_name").innerHTML ="檔案名稱: " + fName;
+		document.querySelector(".upload_file_type").innerHTML ="文件類型: " + fType;
 		document.querySelector(".upload_file_size").innerHTML ="文件大小: " + fSize;
-		document.querySelector(".isCompleted").innerHTML 	  ="上传状态: " + (bIs_uploading?"完成":"正在上传中..");
-	
+		document.querySelector(".isCompleted").innerHTML 	  ="上傳狀態: " + (bIs_uploading?"完成":"正在上傳中..");
+
 		var fData = new FormData(form);
 		var xhr = new XMLHttpRequest();
 		xhr.upload.addEventListener("progress",fProgress,false);
@@ -124,7 +124,7 @@ function uploadCount(e,fSize,conversion){
 	var leftTime = conversion.secondsTotime(Math.round(fSize/speed));
 	speed = conversion.bytesTosize(speed)+"/s";
 	document.querySelector(".speed").innerHTML = speed;
-	document.querySelector(".left_time").innerHTML = "剩余时间 | " + leftTime;
+	document.querySelector(".left_time").innerHTML = "剩餘時間 | " + leftTime;
 	document.querySelector(".upload_percent").innerHTML = perc;
 	document.querySelector(".upload_bar").style.width = perc;
 	nPreuploaded = upSize;

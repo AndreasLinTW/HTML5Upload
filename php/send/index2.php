@@ -1,5 +1,5 @@
 <?php
-$path = "L:/programmer/ComsenzEXP/wwwroot/JQkaifa/HTML5Upload/";
+$path = "D:/wamp64/www/HTML5Upload/";
 $dir = $path."source";
 $files = $_FILES["file"];
 if(!is_dir($dir))

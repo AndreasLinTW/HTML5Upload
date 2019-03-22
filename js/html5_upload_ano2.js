@@ -6,21 +6,21 @@
 //
 
 
-var nSlice_count = 100,//分段数
-	nFactCount,		   //实际分段数
+var nSlice_count = 100,//分段數
+	nFactCount,		   //實際分段數
 	nMin_size 	 = 0.5,//最小分段大小(M)
 	nMax_size	 = 5,  //最大分段大小(M)
-	nFactSize,		   //实际分段大小
-	nCountNum	 = 0,  //分段标号
-	sFile_type,		   //文件类型
-	nFile_load_size,   //文件上传部分大小
+	nFactSize,		   //實際分段大小
+	nCountNum	 = 0,  //分段標號
+	sFile_type,		   //文件類型
+	nFile_load_size,   //檔上傳部分大小
 	nFile_size,		   //文件大小
-	nPreuploaded = 0,  //上一次记录上传部分的大小
-	bImg_compress = true,//判断img是否不在压缩过程中
-	bhas_compress = false,//判断是否已经过压缩
-	bIs_uploading= false,//是否上传中
-	bStart_upload= false,//是否开始上传
-	bEnd_upload  = false;//是否上传完成
+	nPreuploaded = 0,  //上一次記錄上傳部分的大小
+	bImg_compress = true,//判斷img是否不在壓縮過程中
+	bhas_compress = false,//判斷是否已經過壓縮
+	bIs_uploading= false,//是否上傳中
+	bStart_upload= false,//是否開始上傳
+	bEnd_upload  = false;//是否上傳完成
 
 var newUrl;
 
@@ -28,25 +28,25 @@ function init(){
 	var $con = document.getElementById("submit").value;
 
 	if(bImg_compress)
-	bStart_upload = ($con=="上传"?true:false);
+	bStart_upload = ($con=="上傳"?true:false);
 	if(bStart_upload)
 	{
 		if(!bEnd_upload)
-		document.getElementById("submit").value = "暂停";
+		document.getElementById("submit").value = "暫停";
 	}
 	else
-	document.getElementById("submit").value = "上传";
+	document.getElementById("submit").value = "上傳";
 	if(!bEnd_upload && bStart_upload)
-	startUpload();	
+	startUpload();
 }
 
 function startUpload(){
 	var form = document.forms["upload_form"];
 	if(form["file"].files.length<=0)
 	{
-		alert("请先选择文件，然后再点击上传");
+		alert("請先選擇文件，然後再點擊上傳");
 		return;
-	}	
+	}
 
 	var file = form["file"].files[0];
 
@@ -67,7 +67,7 @@ function startUpload(){
 				return {
 					fileName : this.get_name(),
 					fileSize : this.get_size(),
-					fileType : this.get_type()	
+					fileType : this.get_type()
 				}
 			}
 		};
@@ -106,7 +106,7 @@ function startUpload(){
 	};
 
 	var floadend = function(e){
-		if(reader.error){alert("上传失败,出现未知错误");clearTimeout(timer);return;}
+		if(reader.error){alert("上傳失敗,出現未知錯誤");clearTimeout(timer);return;}
 		clearTimeout(timer);
 		if(nCountNum+1!=nFactCount)
 		{
@@ -117,23 +117,23 @@ function startUpload(){
 				return;
 			} else {
 				document.querySelector(".speed").innerHTML = "0k/s";
-				document.querySelector(".left_time").innerHTML = "剩余时间 | 00:00:00";
+				document.querySelector(".left_time").innerHTML = "剩餘時間 | 00:00:00";
 				return;
-			}		
+			}
 		}
 
 		bEnd_upload = true;
 		bhas_compress =false;
 		document.getElementById("isCompress").checked = false;
 		document.querySelector(".speed").innerHTML = "0k/s";
-		document.querySelector(".left_time").innerHTML = "剩余时间 | 00:00:00";
+		document.querySelector(".left_time").innerHTML = "剩餘時間 | 00:00:00";
 		document.querySelector(".upload_percent").innerHTML = "100.00%";
-		document.getElementById("submit").value = "上传";
-		
+		document.getElementById("submit").value = "上傳";
+
 		var $res = JSON.parse(e.target.responseText);
 		filePreview($res);
 		if($res.res=="success") bIs_uploading =true;
-		document.querySelector(".isCompleted").innerHTML="上传状态: " + (bIs_uploading?"上传完成":"正在上传..");
+		document.querySelector(".isCompleted").innerHTML="上傳狀態: " + (bIs_uploading?"上傳完成":"正在上傳..");
 	};
 
 	var uploadStart = function(){
@@ -158,7 +158,7 @@ function startUpload(){
 		xhr.addEventListener("load",floadend,false);
 		xhr.addEventListener("error",errorUp,false);
 		xhr.addEventListener("abort",abortUp,false);
-		
+
 		xhr.open("POST","php/send/");
 		xhr.send(fData);
 	};
@@ -170,10 +170,10 @@ function startUpload(){
 			fSize = conversion.bytesTosize(get_all.fileSize);
 
 		document.querySelector(".upload_message_show").style.display = "block";
-		document.querySelector(".upload_file_name").innerHTML ="文件名称: " + fName;
-		document.querySelector(".upload_file_type").innerHTML ="文件类型: " + fType;
+		document.querySelector(".upload_file_name").innerHTML ="檔案名稱: " + fName;
+		document.querySelector(".upload_file_type").innerHTML ="文件類型: " + fType;
 		document.querySelector(".upload_file_size").innerHTML ="文件大小: " + fSize;
-		document.querySelector(".isCompleted").innerHTML 	  ="上传状态: " + (bIs_uploading?"完成":"正在上传中..");
+		document.querySelector(".isCompleted").innerHTML 	  ="上傳狀態: " + (bIs_uploading?"完成":"正在上傳中..");
 
 		nFactSize = get_all.fileSize/nSlice_count;
 		nFactSize = (nFactSize>=nMin_size*1024*1024?nFactSize:nMin_size*1024*1024);
@@ -195,17 +195,17 @@ function uploadCount(e,fSize,conversion){
 	var leftTime = conversion.secondsTotime(Math.round((fSize-upSize)/speed));
 	speed = conversion.bytesTosize(speed)+"/s";
 	document.querySelector(".speed").innerHTML = speed;
-	document.querySelector(".left_time").innerHTML = "剩余时间 | " + leftTime;
+	document.querySelector(".left_time").innerHTML = "剩餘時間 | " + leftTime;
 	document.querySelector(".upload_percent").innerHTML = perc;
 	document.querySelector(".upload_bar").style.width = perc;
 	nPreuploaded = upSize;
 }
 
 function messageChange(){
-	document.querySelector(".upload_file_name").innerHTML ="文件名称: " ;
-	document.querySelector(".upload_file_type").innerHTML ="文件类型: " ;
+	document.querySelector(".upload_file_name").innerHTML ="檔案名稱: " ;
+	document.querySelector(".upload_file_type").innerHTML ="文件類型: " ;
 	document.querySelector(".upload_file_size").innerHTML ="文件大小: " ;
-	document.querySelector(".isCompleted").innerHTML 	  ="上传状态: " ;
+	document.querySelector(".isCompleted").innerHTML 	  ="上傳狀態: " ;
 	document.querySelector(".upload_bar").style.width = "0%";
 	document.querySelector(".upload_percent").innerHTML = "0%";
 	document.querySelector(".upload_file_preview").innerHTML ="";
@@ -234,19 +234,19 @@ function fileReady(){
 
 		if(isCompress && !bhas_compress)
 		checkTypeIsImage();
-			
+
 	};
 }
 
 
 function errorUp(){
 	bStart_upload = false;
-	document.querySelector(".upload_file_error").innerHTML = "上传过程中出错";
+	document.querySelector(".upload_file_error").innerHTML = "上傳過程中出錯";
 }
 
 function abortUp(){
 	bStart_upload = false;
-	document.querySelector(".upload_file_error").innerHTML = "网络故障，请检查重试";
+	document.querySelector(".upload_file_error").innerHTML = "網路故障，請檢查重試";
 }
 
 function filePreview($src){
@@ -274,7 +274,7 @@ function checkUserAgent(){
 	var msg = true;
 	var agent = ["ipod","iphone","android","symbian","windows mobile"];
 	var info =navigator.userAgent.toLowerCase();
-	
+
 	for(var i=0,j=agent.length;i<j;i++)
 	{
 		if(info.indexOf(agent[i])>0)
@@ -295,7 +295,7 @@ function checkTypeIsImage(){
 		rd.onload = function(e){
 			var ct = document.getElementById("compressTemp");
 			var quality = document.getElementById("compressQuality").value;
-			
+
 			ct.src = e.target.result;
 
 			ct.src = ImageCompress(ct,quality,Mimetype).src;

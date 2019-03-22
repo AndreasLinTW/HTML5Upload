@@ -7,6 +7,7 @@ $ftype = $_POST['type'];
 $fdata = $_FILES['file'];
 $fname = mb_convert_encoding($_POST['name'],"big5","utf-8");
 $truename = mb_convert_encoding($_POST['trueName'],"big5","utf-8");
+//$fname = $_POST['name'];
 
 $path = "../../";
 $dir = $path."source/".$truename."-".$fsize;
@@ -17,10 +18,10 @@ if(!is_dir($dir))
     chmod($dir,0777);
 }
 
-//读取临时文件内容
+//讀取暫存檔案內容
 $temp = fopen($fdata["tmp_name"],"r+");
 $filedata = fread($temp,filesize($fdata["tmp_name"]));
-//将分段内容存放到新建的临时文件里面
+//將分段內容存放到新建的暫存檔案裏面
 if(file_exists($dir."/".$findex.".tmp")) unlink($dir."/".$findex.".tmp");
 $tempFile = fopen($dir."/".$findex.".tmp","w+");
 fwrite($tempFile,$filedata);
@@ -31,7 +32,7 @@ fclose($temp);
 if($findex+1==$ftotal)
 {
     if(file_exists($save)) @unlink($save);
-    //循环读取临时文件并将其合并置入新文件里面
+    //迴圈讀取暫存檔案並將其合併置入新檔裏面
     for($i=0;$i<$ftotal;$i++)
     {
         $readData = fopen($dir."/".$i.".tmp","r+");
