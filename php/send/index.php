@@ -1,12 +1,14 @@
 <?php
 
+$to_encoding = "utf-8"; //"big5"
+
 $fsize = $_POST['size'];
 $findex =$_POST['indexCount'];
 $ftotal =$_POST['totalCount'];
 $ftype = $_POST['type'];
 $fdata = $_FILES['file'];
-$fname = mb_convert_encoding($_POST['name'],"big5","utf-8");
-$truename = mb_convert_encoding($_POST['trueName'],"big5","utf-8");
+$fname = mb_convert_encoding($_POST['name'],$to_encoding,"utf-8");
+$truename = mb_convert_encoding($_POST['trueName'],$to_encoding,"utf-8");
 //$fname = $_POST['name'];
 
 $path = "../../";
@@ -46,7 +48,7 @@ if($findex+1==$ftotal)
 
         $resu = @unlink($dir."/".$i.".tmp");
     }
-    $res = array("res"=>"success","url"=>mb_convert_encoding($truename."-".$fsize."/".$fname,'utf-8','big5'));
+    $res = array("res"=>"success","url"=>mb_convert_encoding($truename."-".$fsize."/".$fname,'utf-8',$to_encoding));
     echo json_encode($res);
 }
 
