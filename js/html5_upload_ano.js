@@ -157,7 +157,7 @@ function startUpload(){
 		xhr.addEventListener("error",errorUp,false);
 		xhr.addEventListener("abort",abortUp,false);
 
-		xhr.open("POST","php/send/");
+		xhr.open("POST","php/");
 		xhr.send(fData);
 	};
 
@@ -245,13 +245,13 @@ function filePreview($src){
 	var IMGMaxHeight = document.querySelector(".upload_message_show").offsetHeight;
 	switch(ftype){
 		case "image" :
-		$temp = '<img src="source/'+$src.url+'" style="max-height:'+IMGMaxHeight+'px;margin-left:30%;">';
+		$temp = '<img src="upload/'+$src.url+'" style="max-height:'+IMGMaxHeight+'px;margin-left:30%;">';
 		break;
 		case "audio" :
-		$temp = '<audio src="source/'+$src.url+'" controls="controls"></audio>';
+		$temp = '<audio src="upload/'+$src.url+'" controls="controls"></audio>';
 		break;
 		case "video" :
-		$temp = '<video src="source/'+$src.url+'" controls="controls"></video>';
+		$temp = '<video src="upload/'+$src.url+'" controls="controls"></video>';
 		break;
 	}
 	var IsPreview = checkUserAgent();
