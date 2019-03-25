@@ -171,7 +171,7 @@ function startUpload(){
 		document.querySelector(".upload_file_name").innerHTML ="檔案名稱: " + fName;
 		document.querySelector(".upload_file_type").innerHTML ="文件類型: " + fType;
 		document.querySelector(".upload_file_size").innerHTML ="文件大小: " + fSize;
-		document.querySelector(".isCompleted").innerHTML 	  ="上傳狀態: " + (bIs_uploading?"完成":"正在上傳中..");
+		document.querySelector(".isCompleted").innerHTML      ="上傳狀態: " + (bIs_uploading?"完成":"正在上傳中..");
 
 		nFactSize = get_all.fileSize/nSlice_count;
 		nFactSize = (nFactSize>=nMin_size*1024*1024?nFactSize:nMin_size*1024*1024);
@@ -203,7 +203,7 @@ function messageChange(){
 	document.querySelector(".upload_file_name").innerHTML ="檔案名稱: " ;
 	document.querySelector(".upload_file_type").innerHTML ="文件類型: " ;
 	document.querySelector(".upload_file_size").innerHTML ="文件大小: " ;
-	document.querySelector(".isCompleted").innerHTML 	  ="上傳狀態: " ;
+	document.querySelector(".isCompleted").innerHTML      ="上傳狀態: " ;
 	document.querySelector(".upload_bar").style.width = "0%";
 	document.querySelector(".upload_percent").innerHTML = "0%";
 	document.querySelector(".upload_file_preview").innerHTML ="";
